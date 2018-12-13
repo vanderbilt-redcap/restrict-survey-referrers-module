@@ -10,13 +10,15 @@ class RestrictSurveyReferrers extends \ExternalModules\AbstractExternalModule
 			return;
 		}
 
+		$referrer = $this->normalizeUrl(@$_SERVER['HTTP_REFERER']);
+
 		$atLeastOneUrlSet = false;
 		foreach($urls as $url){
-			$url = trim($url);
+			$url = $this->normalizeUrl($url);
 			if(!empty($url)){
 				$atLeastOneUrlSet = true;
 
-				if(strpos(@$_SERVER['HTTP_REFERER'], $url) === 0){
+				if(strpos($referrer, $url) === 0){
 					// The referrer matched!  No need to check any further
 					return;
 				}
@@ -36,5 +38,14 @@ class RestrictSurveyReferrers extends \ExternalModules\AbstractExternalModule
 			</script>
 			<?php
 		}
+	}
+
+	private function normalizeUrl($url){
+		$url = trim($url);
+
+		// Support the scenario where one survey is the referrer for another, and the URL prior to index.php redirection is used.
+		$url = str_replace('/surveys/index.php?s=', '/surveys/?s=', $url);
+
+		return $url;
 	}
 }
