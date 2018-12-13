@@ -1,0 +1,28 @@
+{
+	"name": "Restrict Survey Referrers",
+	"namespace": "Vanderbilt\\RestrictSurveyReferrers",
+	"description": "Restricts access to a survey by limiting what URLs are allowed to link to it.  It does not take effect until one or more URLs are added.  The 'Referer' HTTP header is used to implement this, which works well for the average user, but is easy to 'hack' for the more technically skilled.",
+	"authors": [
+		{
+			"name": "Mark McEver",
+			"email": "datacore@vumc.org",
+			"institution": "Vanderbilt University Medical Center"
+		}
+	],
+	"permissions": [
+		"redcap_survey_page"
+	],
+	"project-settings": [
+		{
+			"key": "message",
+			"name": "<b>Error Message</b> - If you want to override the default error message, complete this field.",
+			"type": "textarea"
+		},
+		{
+			"key": "urls",
+			"name": "Allowed Referrer URL Prefix",
+			"type": "text",
+			"repeatable": true
+		}
+	]
+}
